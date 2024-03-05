@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/mirage-gothic" rel="stylesheet">
+    <link rel="shortcut icon" href="https://i.ibb.co/JyWHs6T/IMG-20240305-181315.png">
+        <meta property="og:image" content="https://i.ibb.co/JyWHs6T/IMG-20240305-181315.png">
+        <meta property="og:description" content="countdown puasa 2024 - eberardos">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #222; /* Tema merah */
+            color: white;
+            position: relative;
+        }
+
+                .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loading-spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+      
+        .container {
+            text-align: center;
+        }
+
+        img {
+            width: 200px; /* Sesuaikan ukuran logo */
+            margin-bottom: 20px;
+        }
+
+        .hitung {
+            font-family: Arial;
+            color: white;
+        }
+
+        #countdown {
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Tambahkan flex-wrap untuk mengatur pemindahan ke baris baru jika diperlukan */
+            padding: 20px; /* Tambahkan padding agar lebih terlihat */
+        }
+
+        .unit {
+            margin: 10px; /* Sesuaikan margin agar tidak terlalu dekat */
+        }
+
+        .title {
+            font-size: 18px;
+        }
+
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:active {
+            text-decoration: underline;
+        }
+
+       .apalah {
+         color: tomato;
+         font-family: 'Mirage Gothic', sans-serif
+       }
+        #currentDate {
+            font-family: 'Nunito', sans-serif;
+            text-decoration: overline;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+        }
+
+        footer {
+            color: #0366d6;
+            text-align: center;
+            font-size: 13px;
+            font-family: Sans-Serif;
+            margin-top: 20px; /* Margin tambahan untuk footer */
+        }
+    </style>
+    <title>Countdown Puasa 2024 - Eberárdoⲋ Official</title>
+</head>
+
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
+    <div id="currentDate" style="position: absolute; top: 10px; left: 10px; font-size: 16px;"></div>
+    <div class="container">
+        <img src="https://i.ibb.co/JyWHs6T/IMG-20240305-181315.png" alt="Logo">
+        <marquee><span class="apalah">Countdown Puasa 2024</span></marquee></p>
+        <h1 id="countdown">
+            <div id="days" class="unit">
+                <span id="daysValue"></span><br>
+                <span class="title">Hari</span>
+            </div>
+            <div id="hours" class="unit">
+                <span id="hoursValue"></span><br>
+                <span class="title">Jam</span>
+            </div>
+            <div id="minutes" class="unit">
+                <span id="minutesValue"></span><br>
+                <span class="title">Menit</span>
+            </div>
+            <div id="seconds" class="unit">
+                <span id="secondsValue"></span><br>
+                <span class="title">Detik</span>
+            </div>
+        </h1>
+        <footer>&copy; Eberárdoⲋ Official</footer>
+    </div>
+
+    <script>
+        const targetDate = new Date("2024-03-10T00:00:00").getTime();
+
+        const countdown = setInterval(function () {
+            const currentDate = new Date().getTime();
+            const distance = targetDate - currentDate;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Format untuk menambahkan 0 di depan jika kurang dari 10
+            const formattedHours = hours < 10 ? `0${hours}` : hours;
+            const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+            const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+            // Menampilkan hasil pada elemen dengan id "countdown"
+            document.getElementById("daysValue").innerHTML = days;
+            document.getElementById("hoursValue").innerHTML = formattedHours;
+            document.getElementById("minutesValue").innerHTML = formattedMinutes;
+            document.getElementById("secondsValue").innerHTML = formattedSeconds;
+
+            // Menampilkan hasil pada elemen dengan id "currentDate"
+            const currentDateElement = document.getElementById("currentDate");
+            currentDateElement.innerHTML = getCurrentDate();
+
+            if (distance <= 0) {
+                clearInterval(countdown);
+                document.getElementById("countdown").innerHTML = "Semoga ibadah puasamu diterima dengan baik. Selamat menunaikan ibadah puasa tahun 2024!";
+            }
+        }, 1000);
+
+        function getCurrentDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return now.toLocaleDateString('id', options);
+        }
+        
+        document.onreadystatechange = function () {
+    var loadingOverlay = document.getElementById('loadingOverlay');
+    
+    if (document.readyState == 'complete') {
+        loadingOverlay.style.visibility = 'hidden';
+        loadingOverlay.style.opacity = 0;
+    } else {
+        loadingOverlay.style.visibility = 'visible';
+        loadingOverlay.style.opacity = 1;
+    }
+};
+    </script>
+</body>
+
+  </html>
